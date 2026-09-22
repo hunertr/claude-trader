@@ -38,5 +38,13 @@
       "order_id": "6ab28c35-de07-4868-92fe-3bf08fe8227b"
     }
   ],
-  "notes": "This is the real 'Agentic' Robinhood account, funded with real money on 2026-09-22. Governed by the same rules in paper_trading/strategy_notes.md: crypto only, no options, 2% risk / 10% max single-trade cap, real stop-loss on every position, no oversizing for 'bigger payouts.' Do not confuse this file with paper_trading/portfolio.json, which is a $1,000,000 SIMULATION with no real money."
+  "notes": "This is the real 'Agentic' Robinhood account, funded with real money on 2026-09-22. Governed by the same rules in paper_trading/strategy_notes.md: crypto only, no options, 2% risk / 10% max single-trade cap, real stop-loss on every position, no oversizing for 'bigger payouts.' Do not confuse this file with paper_trading/portfolio.json, which is a $1,000,000 SIMULATION with no real money.",
+  "blockers": [
+    {
+      "timestamp": "2026-09-22T14:13:00Z",
+      "issue": "Robinhood MCP server session expired -- all calls (get_crypto_quotes, get_crypto_orders, get_portfolio) returned 'needs you to sign in again (run /mcp to re-authenticate)'. This is a non-interactive scheduled check-in and cannot complete an OAuth re-auth flow. Could not check BTC position price against take_profit_price, could not verify stop_loss order status, could not check buying power for new trades this cycle.",
+      "impact": "The resting stop_loss order on Robinhood's side is unaffected by this (it lives on the exchange, not in this session) and continues to protect the downside independently. The take_profit check has NO automatic mechanism -- it depends entirely on this hourly job running successfully, so profit-taking is effectively paused until Robinhood access is restored.",
+      "action_needed": "User needs to re-authorize the Robinhood MCP connection (via claude.ai connector settings or `claude mcp` / /mcp in an interactive session). This session cannot do it and did not fabricate any position/price data in place of the blocked calls."
+    }
+  ]
 }
