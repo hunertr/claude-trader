@@ -159,6 +159,33 @@ from tuning against this paper portfolio's own results. Do not start
 adjusting thresholds specifically to make recent paper/live trades look
 better in hindsight — that's overfitting to a live sample of one.
 
+## Crypto universe — what's actually tradable and worth looking at
+
+Checked Robinhood's full crypto catalog (2026-09-22). Most of it is
+low-liquidity, high-volatility meme/micro-cap tokens, many with **active
+trading halts** (BILL, CASHCAT, MOODENG, PNUT, MEW, POPCAT, FLOKI, PENGU,
+TRUMP, WIF, and more — several halted in NY at the time of checking).
+BONK, already sitting in the real account, is in this same category. Do
+not treat "look for faster profit" as license to trade this part of the
+catalog — it's the highest-risk, lowest-quality segment, not an
+opportunity set.
+
+**Preferred watchlist beyond BTC/ETH/SOL** — established, liquid,
+not halted at last check: SUI, SEI, ARB, OP, INJ, AAVE, RENDER, HBAR.
+Snapshot check (2026-09-22) showed no real setup on any of them — all
+moving under ±2.5% on the day, no breakout or trend signal. That's a
+legitimate "nothing to do right now," not a reason to widen the search
+into the meme-coin tier instead.
+
+**Known data limitation**: Robinhood's tools give live crypto quotes but
+NOT historical OHLC bars or technical indicators for crypto (unlike
+equities, which have full RSI/MACD/SMA history). This means crypto
+entries can't be validated with the same rigor as the NVDA/SPY backtest
+— only live price and 24h change are available. Until a better crypto
+data source exists, lean more conservative and patient on crypto entries
+than the equity-validated rules would suggest, and don't mistake "I can't
+verify this technically" for "so any move is as good as another."
+
 ## Small-account reality (applies directly to the $40 live account)
 
 Research confirms: accounts under ~$1,000 carry real risk of ruin from fee
