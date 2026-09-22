@@ -4,6 +4,43 @@ Reference doc for both the paper portfolio and the live "Agentic" Robinhood
 account once funded. Read by the hourly automated check-in before making
 decisions, so strategy stays consistent across runs instead of drifting.
 
+## Backtest results (2026-09-22) — read this before trusting the rules below
+
+Ran a real historical backtest (Robinhood daily OHLC, Jan 2025–Sep 2026) of
+the literal entry rule below in isolation: SMA50 trend filter + RSI(14)
+crosses above 58 + MACD confirms, long-only, fixed 5% stop / 10% target,
+one position at a time. Results:
+
+- **NVDA**: 11 trades, 27% win rate, **-4.3% return** vs **+60.7% buy-and-hold**
+  over the same period. Profit factor 0.73 (net losing).
+- **SPY**: 4 closed trades, 50% win rate, +3.9% return vs +30.3%
+  buy-and-hold. Profit factor ~2, but n=4 is not statistically meaningful.
+
+**Verdict: this exact rule set, tested in isolation, loses to just holding
+the asset.** Root cause: RSI>58 fires after a move is already extended, so
+entries are late; the fixed 5% stop then gets hit on normal pullbacks
+before the larger continuation move plays out (8 of 11 NVDA trades were
+stop-outs, several right before the stock kept running). This is the same
+failure mode this repo's MT5 bot already diagnosed and fixed for
+EURUSD/GBPUSD via SMC confluence (see backtest results below and
+CLAUDE.md) — pure RSI-momentum entries without structural confirmation
+enter too late.
+
+**Implication for automated runs**: do not treat the raw RSI/MACD/SMA
+entry rule as sufficient on its own for real-money sizing decisions. The
+TJR/ICT sweep→BOS→reaction sequencing (below) is the more promising fix —
+it deliberately waits for the pullback/reaction instead of chasing the
+RSI cross — but it has NOT been backtested yet. Prefer entries that
+satisfy the ICT sequencing over a bare RSI cross when the two disagree.
+Trailing the stop instead of a fixed 5% target/stop (letting winners run
+further, consistent with the "trend-following has the deepest edge"
+research below) is also a more promising fix than tested here, and is
+already how the live MT5 bot's MONITOR/WATCH agents behave — the same
+should apply to the crypto account once funded rather than a bare
+fixed-% exit. Full methodology, limitations (daily bars only, no
+fees/slippage, small sample, SMA50 as EMA200 proxy), and trade log
+available in this repo's commit history / session log if needed.
+
 ## Indicator set (crypto + equities)
 
 Research-backed combination, not stacking redundant signals:
