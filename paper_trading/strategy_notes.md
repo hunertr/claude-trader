@@ -63,6 +63,22 @@ together add noise, not signal).
 - Never add to a losing position
 - No options trading
 
+**Sizing formula fix (found via backtest, 2026-09-22):** risk_amount /
+stop_distance_pct alone is NOT a valid position-size formula on its own —
+with a 2% risk cap and a 5% stop, it computes to 40% of capital in a
+single trade, which blows through the 20% max-deployed rule above before
+even considering a second position. The formula must be:
+
+```
+position_notional = min(risk_pct_of_capital / stop_distance_pct, max_single_trade_pct) * capital
+```
+
+Use `max_single_trade_pct = 10%` (leaves room for up to 2 concurrent
+positions under the 20% total-deployed cap). Whichever of the risk-based
+size or the 10% cap is SMALLER wins — the risk-based number is not an
+entitlement to trade that large just because the stop happens to be
+tight. Apply this on every position-sizing decision, paper or live.
+
 ## Entry sequencing (TJR / ICT liquidity model)
 
 This repo's MT5 bot already detects raw SMC building blocks per-instrument
@@ -159,6 +175,18 @@ account specifically:
 - Do not chase multiplying $40 into a large sum quickly — that expectation
   is not realistic from legitimate trading edge; the point is to run the
   same disciplined process that scales, and let compounding work over time
+
+**Order mechanics confirmed via $100 backtest rerun (2026-09-22):** every
+trade at this size requires fractional units. For equities, fractional
+shares may not support a broker-side resting stop-loss order (backtest
+had to assume clean fills, which live equity trading can't guarantee).
+For crypto specifically — what the live account actually trades — this
+is NOT a blocker: `place_crypto_order` supports `stop_loss` and
+`stop_limit` order types natively on fractional quantities. Always use a
+real resting stop order for live crypto trades rather than only a
+mentally-tracked stop level; do not rely on the hourly job polling price
+and firing a market sell as the primary stop mechanism — that adds
+avoidable slippage/latency risk a resting stop order doesn't have.
 
 ## Free course study — trading plan & behavioral finance
 
