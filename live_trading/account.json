@@ -1,0 +1,42 @@
+{
+  "account": "Robinhood Agentic (##1853)",
+  "type": "REAL MONEY - not a simulation",
+  "starting_deposit": 19.00,
+  "funded_at": "2026-09-22T10:00:00-04:00",
+  "positions": {
+    "BTC": {
+      "quantity": 0.00002185,
+      "entry_price": 86932.8015164,
+      "cost_basis": 1.90,
+      "buy_order_id": "6ab28c25-01fb-4739-a70f-6593b8309c32",
+      "stop_loss_price": 82586.16,
+      "stop_loss_order_id": "6ab28c35-de07-4868-92fe-3bf08fe8227b",
+      "take_profit_price": 95626.08,
+      "take_profit_order_id": null,
+      "opened": "2026-09-22T10:09:42-04:00",
+      "rationale": "Most liquid/lowest single-asset-risk on the watchlist, steady +0.5% on the day rather than a single-session spike (avoided chasing HBAR/INJ's bigger 24h moves without RSI/MACD confirmation, which Robinhood's crypto data doesn't support). Sized at min(2% risk / 5% stop, 10% cap) of $19.01 = $1.90 per the documented sizing formula fix.",
+      "note": "No native OCO/bracket order support in the crypto API -- resting stop-loss placed, but take-profit is NOT a resting order (a second resting sell would conflict with the stop). The hourly automated job must check price against take_profit_price and, if reached, cancel the stop-loss order and sell at market/limit."
+    }
+  },
+  "trade_log": [
+    {
+      "timestamp": "2026-09-22T10:09:42-04:00",
+      "action": "BUY",
+      "symbol": "BTC-USD",
+      "quantity": 0.00002185,
+      "price": 86932.8015164,
+      "notional": 1.90,
+      "fee": 0,
+      "order_id": "6ab28c25-01fb-4739-a70f-6593b8309c32"
+    },
+    {
+      "timestamp": "2026-09-22T10:09:57-04:00",
+      "action": "PLACE_STOP_LOSS",
+      "symbol": "BTC-USD",
+      "quantity": 0.00002185,
+      "stop_price": 82586.16,
+      "order_id": "6ab28c35-de07-4868-92fe-3bf08fe8227b"
+    }
+  ],
+  "notes": "This is the real 'Agentic' Robinhood account, funded with real money on 2026-09-22. Governed by the same rules in paper_trading/strategy_notes.md: crypto only, no options, 2% risk / 10% max single-trade cap, real stop-loss on every position, no oversizing for 'bigger payouts.' Do not confuse this file with paper_trading/portfolio.json, which is a $1,000,000 SIMULATION with no real money."
+}
