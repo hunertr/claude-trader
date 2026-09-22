@@ -160,6 +160,38 @@ account specifically:
   is not realistic from legitimate trading edge; the point is to run the
   same disciplined process that scales, and let compounding work over time
 
+## Free course study — trading plan & behavioral finance
+
+Studied two well-regarded free courses for content not already covered
+above: BabyPips "School of Pipsology" (the most established free forex
+curriculum — 350+ lessons, free, self-paced) and Yale's "Financial
+Markets" (Robert Shiller, Nobel laureate, free on Coursera). Two genuinely
+new additions, not just repetition of the quant research above:
+
+**A written trading plan is what separates trading from gambling.**
+BabyPips' framing, and it's a fair one: before scaling risk, the plan
+should state — in writing — goals, risk tolerance, time horizon, and which
+setups are/aren't traded. This repo already has the equivalent (this
+strategy doc + the risk rules + the explicit "no options, crypto only,
+1-2% per trade" constraints for the $40 account), so the gap isn't a
+missing plan, it's discipline in *following* the existing one under
+pressure to "prove" faster results — worth naming explicitly since that
+pressure is real (see: repeated pushes to loosen risk for bigger returns).
+
+**Markets are not fully efficient — behavioral finance explains *why*
+trend-following works, not just *that* it works.** Shiller's course
+(built on his own Nobel-winning research) argues persistent market
+anomalies come from narrative-driven feedback loops and overconfidence —
+including among professionals, not just retail. This reframes the
+trend-following edge documented above: it isn't a statistical fluke that
+happens to persist, it's a structural consequence of how humans actually
+process and react to market narratives (slow to react to new information,
+then overreact and chase). Practical takeaway: overconfidence is the
+single most consistently cited failure mode in both the quant and
+behavioral-finance literature reviewed so far — a good reason to keep
+applying the existing risk caps mechanically rather than trusting
+in-the-moment conviction on any one trade or "hot streak."
+
 ## Sources consulted (2026)
 
 - https://www.kucoin.com/blog/day-trading-crypto
@@ -178,3 +210,6 @@ account specifically:
 - https://en.wikipedia.org/wiki/Trend_following
 - https://www.luxalgo.com/blog/what-is-overfitting-in-trading-strategies/
 - https://blog.quantinsti.com/walk-forward-optimization-introduction/
+- https://www.babypips.com/learn/forex (School of Pipsology, free course)
+- https://www.coursera.org/learn/financial-markets-global (Shiller, Financial Markets, free)
+- https://oyc.yale.edu/economics/econ-252
