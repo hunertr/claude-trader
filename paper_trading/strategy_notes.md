@@ -54,6 +54,58 @@ Discipline addition from TJR's own framing: cap trades per day/week (quality
 over quantity) rather than trading every signal that appears — this is
 consistent with, not in tension with, the 1-2% per-trade risk rule above.
 
+## Broader research synthesis
+
+Wider pass across quant/systematic trading literature, not just retail
+day-trading content, to sanity-check the approach above.
+
+**Trend-following has the deepest documented edge.** AQR and others find
+trend/momentum effects persistent across 200+ years and multiple asset
+classes; systematic trend-following (the Turtle Trading lineage, $300B+ in
+CTA assets today) was positive in 8 of the last 10 major market crises.
+Practical implication: default bias is *trade with the prevailing trend*
+(the EMA200 gate this repo's MT5 bot already enforces is the right
+instinct) — treat counter-trend/mean-reversion entries as the higher-bar,
+lower-frequency exception, not the default mode.
+
+**Mean reversion is real but shorter-horizon and asset-dependent.** Academic
+work (Lehmann) finds ~1-2%/week abnormal returns after extreme short-term
+moves, but it works better in stocks than in trending assets like crypto,
+which has favored momentum historically. Reserve BB-extreme mean-reversion
+entries for range-bound conditions (low ADX / weak trend), not as a
+default crypto approach.
+
+**Base rate on day trading is bad, and it's frequency-driven, not
+strategy-driven.** Across studies, 70-95% of day traders lose money;
+losing traders place roughly 4x more trades than winning ones, and
+accounts trading 500+ times/year show up to an 80% loss rate. This
+directly reinforces the "cap trades per day/week, quality over quantity"
+rule already in this doc — it is not just TJR's opinion, it's the
+single most consistent finding across the retail-trading literature.
+Overtrading is the most likely failure mode here, more than picking a
+wrong indicator.
+
+**Position sizing: fractional Kelly, not flat guesses.** The Kelly
+criterion sizes bets from actual win rate and win/loss ratio, but with
+under ~50 realized trades those estimates carry too much variance to
+trust directly — a 20-trade sample can be off by 10+ points on win rate
+alone. Practical rule: keep using the flat 1-2% cap (equivalent to a
+conservative quarter-Kelly for a plausible retail edge) until the
+trade_log in portfolio.json has 50+ closed trades, then actually compute
+realized win rate and average win/loss ratio from that log and revisit
+sizing with real numbers instead of an assumed edge.
+
+**Overfitting is the main way a backtested "edge" turns out fake.**
+Over 90% of academic/backtested strategies reportedly fail when traded
+with real capital — mainly from in-sample parameter tweaking and
+lookahead bias. Guardrails already in place that address this: the
+indicator set is deliberately small and non-redundant (not curve-fit to
+this account's short history), and parameters (RSI 58/42, EMA200, etc.)
+come from the existing MT5 bot's independently-run 2-year backtest, not
+from tuning against this paper portfolio's own results. Do not start
+adjusting thresholds specifically to make recent paper/live trades look
+better in hindsight — that's overfitting to a live sample of one.
+
 ## Small-account reality (applies directly to the $40 live account)
 
 Research confirms: accounts under ~$1,000 carry real risk of ruin from fee
@@ -80,3 +132,12 @@ account specifically:
 - https://tokenmetrics.com/blog/10-best-indicators-for-crypto-trading-and-analysis-in-2026/
 - https://www.snappchart.app/blog/beginner-playbook/tjr-ict-trading-strategy
 - https://phidiaspropfirm.com/trading-strategies-explained
+- https://www.researchgate.net/publication/369427448_Comparison_of_Two_Quantitative_Strategies_Momentum_and_Mean-reversion
+- https://papertradingjournal.com/2026/05/12/momentum-vs-mean-reversion-statistics/
+- https://medium.com/@faisal_haroon/i-reviewed-every-major-day-trading-study-from-the-last-25-years-the-data-is-devastating-4b116273b956
+- https://tradeciety.com/24-statistics-why-most-traders-lose-money
+- https://darkbot.io/blog/kelly-criterion-crypto
+- https://www.altrady.com/blog/risk-management/kelly-criterion-crypto-position-sizing
+- https://en.wikipedia.org/wiki/Trend_following
+- https://www.luxalgo.com/blog/what-is-overfitting-in-trading-strategies/
+- https://blog.quantinsti.com/walk-forward-optimization-introduction/
