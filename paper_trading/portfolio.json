@@ -1,0 +1,33 @@
+{
+  "starting_value": 1000000.00,
+  "target_value": 10000000.00,
+  "cash": 980002.00,
+  "positions": {
+    "NVDA": {
+      "quantity": 88,
+      "entry_price": 227.25,
+      "cost_basis": 19998.00,
+      "stop_loss": 215.89,
+      "take_profit": 250.00,
+      "opened": "2026-09-22T00:00:00Z",
+      "rationale": "RSI(14) 54 neutral-bullish, price $227.25 above 50-day SMA $214.50, mild uptrend confirmed. SPY broad market ADX 19 (weak/ranging) so sized as a starter position rather than full conviction size."
+    }
+  },
+  "trade_log": [
+    {
+      "timestamp": "2026-09-22T00:00:00Z",
+      "action": "BUY",
+      "symbol": "NVDA",
+      "quantity": 88,
+      "price": 227.25,
+      "value": 19998.00,
+      "stop_loss": 215.89,
+      "take_profit": 250.00,
+      "risk_pct_of_portfolio": 2.0,
+      "rationale": "RSI 54, price above 50-day SMA, mild bullish momentum. Broad market (SPY) range-bound (ADX 19), so kept to starter/2% size rather than full conviction."
+    }
+  ],
+  "created": "2026-09-22T00:00:00Z",
+  "last_updated": "2026-09-22T00:00:00Z",
+  "notes": "Paper trading simulation. Real Robinhood 'Agentic' account (##1853) has $1.33 real value / $0.01 buying power and cannot execute real orders. This ledger tracks a virtual $1,000,000 portfolio using real live market data (quotes, technicals, news) from Robinhood MCP tools, with the goal of reaching $10,000,000. No real orders are placed against any brokerage account."
+}
