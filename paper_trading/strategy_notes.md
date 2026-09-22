@@ -26,6 +26,34 @@ together add noise, not signal).
 - Never add to a losing position
 - No options trading
 
+## Entry sequencing (TJR / ICT liquidity model)
+
+This repo's MT5 bot already detects raw SMC building blocks per-instrument
+(`_smc_detect_fvg`, `_smc_detect_ob`, `_smc_detect_liquidity` in gold.py /
+eurusd.py / gbpusd.py). TJR's refinement is the *sequencing* those signals
+fire in — don't trade an FVG/OB in isolation, require this order:
+
+1. **Identify liquidity** — an obvious swing high/low where stops cluster
+   (prior session high/low, equal highs/lows, round numbers)
+2. **Wait for the sweep** — a wick through that level that closes back
+   inside (a stop hunt, not a genuine breakout)
+3. **Confirm break of structure (BOS)** — after the sweep, price must break
+   the most recent opposing swing point on a lower timeframe, confirming
+   the reversal direction
+4. **Enter on the reaction** — at the resulting FVG or order block formed by
+   the BOS impulse, not on the sweep candle itself
+5. **Stop beyond the sweep's extreme**, target the opposing liquidity pool
+
+Applies to session-based levels too (e.g. Asia-range high/low swept at
+London open, then BOS confirms direction) — same pattern, different level
+source. For crypto (24/7, no sessions in the FX sense), substitute prior
+day/week high-low or equal highs/lows as the liquidity reference instead of
+session ranges.
+
+Discipline addition from TJR's own framing: cap trades per day/week (quality
+over quantity) rather than trading every signal that appears — this is
+consistent with, not in tension with, the 1-2% per-trade risk rule above.
+
 ## Small-account reality (applies directly to the $40 live account)
 
 Research confirms: accounts under ~$1,000 carry real risk of ruin from fee
@@ -50,3 +78,5 @@ account specifically:
 - https://www.mexc.com/news/549058
 - https://www.theblockverse.co/best-crypto-indicators-for-beginners/
 - https://tokenmetrics.com/blog/10-best-indicators-for-crypto-trading-and-analysis-in-2026/
+- https://www.snappchart.app/blog/beginner-playbook/tjr-ict-trading-strategy
+- https://phidiaspropfirm.com/trading-strategies-explained
