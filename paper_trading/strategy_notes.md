@@ -159,6 +159,26 @@ from tuning against this paper portfolio's own results. Do not start
 adjusting thresholds specifically to make recent paper/live trades look
 better in hindsight — that's overfitting to a live sample of one.
 
+## Weekend liquidity risk (crypto-specific, relevant every Fri-Sun)
+
+Research confirms crypto trading volume drops 20-40% on weekends vs
+weekdays, with some data showing 2-3x weekday volatility for BTC/alts
+during that window -- driven by thin order books, not new information.
+One documented extreme: $19B in long positions liquidated following a
+Friday close as volatility spiked into the low-liquidity weekend window.
+
+Practical implications, not just background:
+- A resting stop-loss can suffer worse slippage than modeled if it
+  triggers during weekend thin liquidity -- a fast wick can blow through
+  the stop price before it fills. This is a real execution-quality risk
+  on any position held into a weekend, not a reason to widen stops
+  (that's loosening risk management, not managing this one).
+- Be more conservative about opening brand-new positions right as
+  weekend liquidity thins (Friday evening UTC onward) -- wider spreads
+  eat more of any edge during that window specifically.
+- Do not treat "crypto trades 24/7" as "crypto behaves the same 24/7" --
+  weekend price action reflects thin markets more than trend conviction.
+
 ## Crypto universe — what's actually tradable and worth looking at
 
 Checked Robinhood's full crypto catalog (2026-09-22). Most of it is
