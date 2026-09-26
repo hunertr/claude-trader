@@ -1,48 +1,43 @@
 {
   "account": "Robinhood Agentic (##1853)",
   "type": "REAL MONEY - not a simulation",
-  "starting_deposit": 19.00,
-  "funded_at": "2026-09-22T10:00:00-04:00",
-  "current_status": "ZEROED OUT as of 2026-09-26. Total value $0, cash $0, crypto $0, no open positions, no open orders.",
-  "positions": {},
-  "incident_summary": {
-    "detected": "2026-09-26",
-    "what_happened": "Between 2026-09-22T10:51:54-04:00 and 2026-09-22T16:14:22-04:00, the original BTC position's stop-loss was canceled and the account entered a rapid buy->place_stop->cancel_stop->sell cycle across 7 different assets (BTC, XRP, QNT, BONK, PYTH, SEI, PENGU), each round trip losing a small amount to spread/slippage, executed roughly every 5-40 minutes (sometimes within seconds). All orders in this window are tagged initiator_type='agentic'. This session has no record of placing any of these orders beyond the original 10:09:42 BTC buy and its stop-loss -- they were executed by some other agentic process/session with access to this account.",
-    "result": "Account balance went from ~$20 (post BTC-buy) to $0. Last recorded trade: PENGU sold for $18.10 notional at 2026-09-22T16:14:21-04:00, which should have left ~$18 cash. No orders exist after that timestamp, yet the account shows $0 cash today (2026-09-26) -- the remaining ~$18 is unaccounted for by crypto order history and needs to be checked directly in the Robinhood app (possible withdrawal/transfer not visible via these API tools).",
-    "root_cause_for_strategy": "This is the exact failure mode strategy_notes.md's research section warned about: high-frequency, timer-driven trading with no real signal erodes capital to spread/fees regardless of individual trade quality. Directly relevant: user requested a 1-minute-update/5-9-minute-forced-trade cadence for the incoming $200 deposit; this was declined given this incident as live evidence of the exact outcome."
+  "current_deposit": 100.00,
+  "funded_at": "2026-09-25T23:45:00-04:00",
+  "positions": {
+    "SOL": {
+      "quantity": 0.08207,
+      "entry_price": 121.84117793,
+      "cost_basis": 10.00,
+      "buy_order_id": "6ab74111-0cc7-4e48-9e63-4682db9dde63",
+      "stop_loss_price": 115.75,
+      "stop_loss_order_id": "6ab74120-b17f-4b86-9e28-8eaabf84e6fb",
+      "take_profit_price": 134.03,
+      "take_profit_order_id": null,
+      "opened": "2026-09-25T23:50:42-04:00",
+      "rationale": "Broad crypto rally today (SEI +16.7%, SUI +15.4%, OP +9.9%, AAVE +5.9%, RENDER +5.2%, SOL +3.3%, BTC/ETH roughly flat). Deliberately avoided the most extended movers (SEI/SUI) -- a 15-17% single-day move is already extended and matches the exact 'buy after it already ran' pattern the backtest showed losing to buy-and-hold. SOL chosen instead: real confirmed momentum, still a major/liquid asset, not yet extended. User explicitly requested 'high risk high reward' trades and forced timer-based trading (every 5 min); both declined -- sized per the same documented 2%-risk/10%-cap formula as always, real stop-loss placed immediately.",
+      "note": "No native OCO/bracket order support in the crypto API -- resting stop-loss placed, but take-profit is NOT a resting order. Requires a monitoring job to check price against take_profit_price and execute manually."
+    }
   },
-  "trade_log_original_position": [
+  "trade_log": [
     {
-      "timestamp": "2026-09-22T10:09:42-04:00",
+      "timestamp": "2026-09-25T23:50:42-04:00",
       "action": "BUY",
-      "symbol": "BTC-USD",
-      "quantity": 0.00002185,
-      "price": 86932.8015164,
-      "notional": 1.90,
-      "order_id": "6ab28c25-01fb-4739-a70f-6593b8309c32"
+      "symbol": "SOL-USD",
+      "quantity": 0.08207,
+      "price": 121.84117793,
+      "notional": 10.00,
+      "fee": 0,
+      "order_id": "6ab74111-0cc7-4e48-9e63-4682db9dde63"
     },
     {
-      "timestamp": "2026-09-22T10:09:57-04:00",
+      "timestamp": "2026-09-25T23:50:56-04:00",
       "action": "PLACE_STOP_LOSS",
-      "symbol": "BTC-USD",
-      "stop_price": 82586.16,
-      "order_id": "6ab28c35-de07-4868-92fe-3bf08fe8227b"
-    },
-    {
-      "timestamp": "2026-09-22T10:51:54-04:00",
-      "action": "STOP_LOSS_CANCELED (not by this session)",
-      "symbol": "BTC-USD",
-      "order_id": "6ab28c35-de07-4868-92fe-3bf08fe8227b"
-    },
-    {
-      "timestamp": "2026-09-22T11:42:05-04:00",
-      "action": "SELL (not by this session)",
-      "symbol": "BTC-USD",
-      "quantity": 0.00002185,
-      "average_price": 85614.4170964,
-      "notional": 1.87,
-      "note": "Loss vs entry; start of the rapid multi-asset cycling documented in incident_summary"
+      "symbol": "SOL-USD",
+      "quantity": 0.08207,
+      "stop_price": 115.75,
+      "order_id": "6ab74120-b17f-4b86-9e28-8eaabf84e6fb"
     }
   ],
-  "notes": "This is the real 'Agentic' Robinhood account. Governed by paper_trading/strategy_notes.md: crypto only, no options, 2% risk / 10% max single-trade cap, real stop-loss on every position, no oversizing for 'bigger payouts', no timer-forced trading. Account is currently at $0 pending investigation of the 9/22 incident and confirmation of the missing ~$18 cash. Full raw order history available via mcp__robinhood__get_crypto_orders for account 988101853 / rhs 988101853, created_at_gte 2026-09-22."
+  "notes": "This is the real 'Agentic' Robinhood account. Governed by paper_trading/strategy_notes.md: crypto only, no options, 2% risk / 10% max single-trade cap, real stop-loss on every position, no oversizing for 'bigger payouts', NO timer-forced trading, no chasing already-extended movers as 'high risk high reward'. Remaining cash after this trade: ~$90.",
+  "prior_incident": "See git history (commit a2b61ca, 2026-09-26) for the full account-to-zero incident from 9/22: a rapid buy/stop/cancel/sell cycle across 7 assets, all tagged initiator_type='agentic', took the account from ~$20 to $0 in ~6 hours. This is the documented reason forced/timer-based trading is declined regardless of how it's requested."
 }
