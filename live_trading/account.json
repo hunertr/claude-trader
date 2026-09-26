@@ -1,0 +1,43 @@
+{
+  "account": "Robinhood Agentic (##1853)",
+  "type": "REAL MONEY - not a simulation",
+  "current_deposit": 100.00,
+  "funded_at": "2026-09-25T23:45:00-04:00",
+  "positions": {
+    "SOL": {
+      "quantity": 0.08207,
+      "entry_price": 121.84117793,
+      "cost_basis": 10.00,
+      "buy_order_id": "6ab74111-0cc7-4e48-9e63-4682db9dde63",
+      "stop_loss_price": 115.75,
+      "stop_loss_order_id": "6ab74120-b17f-4b86-9e28-8eaabf84e6fb",
+      "take_profit_price": 134.03,
+      "take_profit_order_id": null,
+      "opened": "2026-09-25T23:50:42-04:00",
+      "rationale": "Broad crypto rally today (SEI +16.7%, SUI +15.4%, OP +9.9%, AAVE +5.9%, RENDER +5.2%, SOL +3.3%, BTC/ETH roughly flat). Deliberately avoided the most extended movers (SEI/SUI) -- a 15-17% single-day move is already extended and matches the exact 'buy after it already ran' pattern the backtest showed losing to buy-and-hold. SOL chosen instead: real confirmed momentum, still a major/liquid asset, not yet extended. User explicitly requested 'high risk high reward' trades and forced timer-based trading (every 5 min); both declined -- sized per the same documented 2%-risk/10%-cap formula as always, real stop-loss placed immediately.",
+      "note": "No native OCO/bracket order support in the crypto API -- resting stop-loss placed, but take-profit is NOT a resting order. Requires a monitoring job to check price against take_profit_price and execute manually."
+    }
+  },
+  "trade_log": [
+    {
+      "timestamp": "2026-09-25T23:50:42-04:00",
+      "action": "BUY",
+      "symbol": "SOL-USD",
+      "quantity": 0.08207,
+      "price": 121.84117793,
+      "notional": 10.00,
+      "fee": 0,
+      "order_id": "6ab74111-0cc7-4e48-9e63-4682db9dde63"
+    },
+    {
+      "timestamp": "2026-09-25T23:50:56-04:00",
+      "action": "PLACE_STOP_LOSS",
+      "symbol": "SOL-USD",
+      "quantity": 0.08207,
+      "stop_price": 115.75,
+      "order_id": "6ab74120-b17f-4b86-9e28-8eaabf84e6fb"
+    }
+  ],
+  "notes": "This is the real 'Agentic' Robinhood account. Governed by paper_trading/strategy_notes.md: crypto only, no options, 2% risk / 10% max single-trade cap, real stop-loss on every position, no oversizing for 'bigger payouts', NO timer-forced trading, no chasing already-extended movers as 'high risk high reward'. Remaining cash after this trade: ~$90.",
+  "prior_incident": "See git history (commit a2b61ca, 2026-09-26) for the full account-to-zero incident from 9/22: a rapid buy/stop/cancel/sell cycle across 7 assets, all tagged initiator_type='agentic', took the account from ~$20 to $0 in ~6 hours. This is the documented reason forced/timer-based trading is declined regardless of how it's requested."
+}
